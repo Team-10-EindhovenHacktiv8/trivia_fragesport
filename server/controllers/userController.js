@@ -15,11 +15,6 @@ class userController {
                 res.status(201).json({ id, email, first_name, last_name })
             })
             .catch(err => {
-                // if (err.name === "SequelizeValidationError" || "SequelizeUniqueConstraintError") {
-                //     res.status(400).json(err.errors)
-                // } else {
-                //     res.status(500).json({ message: err })
-                // }
                 next(err)
             })
     }
@@ -50,14 +45,10 @@ class userController {
                 } 
             })
             .catch((err) => {
-                // if (err.name === "SequelizeValidationError" || "SequelizeUniqueConstraintError") {
-                //     res.status(400).json(err)
-                // } else {
-                //     res.status(500).json({ message: err })
-                // }
                 next(err)
             })
     }
+
 }
 
 module.exports = userController
