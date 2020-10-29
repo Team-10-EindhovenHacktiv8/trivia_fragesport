@@ -1,23 +1,32 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset='utf-8'>
   <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-  <meta name="google-signin-client_id" content="826714744713-kbk43co0cp58c7r4u47kek6vjpu1shbk.apps.googleusercontent.com">
+  <meta name="google-signin-client_id"
+    content="826714744713-kbk43co0cp58c7r4u47kek6vjpu1shbk.apps.googleusercontent.com">
   <title>Trivia Fragesport</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+    integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
   <meta name='viewport' content='width=device-width, initial-scale=1'>
-  <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+  <link rel='stylesheet' type='text/css' media='screen' href='style.css'>
 </head>
+
 <body>
-  <section class="container" id="triviainit">
-    <div class="row justify-content-center align-items-center mt-5" style="height: 100vh;">
+  <section class="container" id="triviainit" class="justify-content-center">
+    <div class="row justify-content-center align-items-center mt-5" style="height: 94vh;">
+      <div class="col-12" style="text-align: center;">
+      <h1>Trivia Fragesport</h1>
+      <h3>If you get a high score, you probably spend way too much time on Wikipedia.</h3>
+      <p class="faded">(You'll have to provide your own snacks, sorry.)</p>
+    </div>
       <div class="col-6">
-        <img class='w-100' src="./assets/test.svg"/>
+        <img class='w-100' src="./assets/test.svg" />
       </div>
-      <div class="col-5 p-5 shadow rounded justify-content-center">
+      <div class="col-5 p-5 shadow rounded justify-content-center bg-dark">
         <h1>Ready to take a quiz?</h1>
-        <hr/>
+        <hr />
         <form onsubmit="initquestion(event)">
           <div class="form-group">
             <label for="category">Category</label>
@@ -32,22 +41,34 @@
             </select>
           </div>
           <div class="form-group">
-            <label for="difficult">difficulty</label>
+            <label for="difficulty">difficulty</label>
             <select id="difficulty" class="form-control form-control-lg">
               <option value="easy">Easy</option>
               <option value="medium">Medium</option>
               <option value="hard">Hard</option>
             </select>
           </div>
-          <button type="submit" class="btn btn-primary w-100">Play!</button>
-          <br/><br/>
-          </div>
-        </form>
+          <button type="submit" class="btn btn-primary w-100">Let's begin, shall we?</button>
+          <br /><br />
+      </div>
+      </form>
+    </div>
+    </div>
+    </div>
+  </section>
+
+    <div id="quiz">
+      <div id="quiz-header">
+        <h1>Trivia Fragesport</h1>
+        <p class="faded">Holla User</p>
+      </div>
+      <div id="quiz-start-screen">
+        <p><a href="#" id="quiz-start-btn" class="quiz-button">Start</a></p>
       </div>
     </div>
-  </div>
-  </section>
+  
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="index.js"></script>
 </body>
+
 </html>

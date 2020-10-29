@@ -5,6 +5,7 @@ class ControllerTrivia {
     const idCategory = +req.body.idCategory
     const amountQuestion = +req.body.amountQuestion
     const difficulty = req.body.difficulty
+    
     axios.get(`https://opentdb.com/api.php?amount=${amountQuestion}&category=${idCategory}&difficulty=${difficulty}&type=multiple`)
       .then(data => {
         res.status(200).json(data.data.results)
