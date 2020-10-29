@@ -14,6 +14,7 @@
   <style>
         input {cursor: pointer;}
   </style>
+  <link rel='stylesheet' type='text/css' media='screen' href='style.css'>
 </head>
 <body>
   <!-- Hello Salut -->
@@ -81,7 +82,58 @@
   </section>
   <!-- End Register Page -->
   <!-- Home Page -->
+  <section class="container" id="triviainit" class="justify-content-center">
+    <div class="row justify-content-center align-items-center mt-5" style="height: 94vh;">
+      <div class="col-12" style="text-align: center;">
+      <h1>Trivia Fragesport</h1>
+      <h3>If you get a high score, you probably spend way too much time on Wikipedia.</h3>
+      <p class="faded">(You'll have to provide your own snacks, sorry.)</p>
+    </div>
+      <div class="col-6">
+        <img class='w-100' src="./assets/test.svg" />
+      </div>
+      <div class="col-5 p-5 shadow rounded justify-content-center bg-dark">
+        <h1>Ready to take a quiz?</h1>
+        <hr />
+        <form onsubmit="initquestion(event)">
+          <div class="form-group">
+            <label for="category">Category</label>
+            <select id="idcategory" class="form-control form-control-lg"></select>
+          </div>
+          <div class="form-group">
+            <label for="amount">Amount of question</label>
+            <select id="amountquestion" class="form-control form-control-lg">
+              <option value="10">10</option>
+              <option value="20">20</option>
+              <option value="30">30</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="difficulty">difficulty</label>
+            <select id="difficulty" class="form-control form-control-lg">
+              <option value="easy">Easy</option>
+              <option value="medium">Medium</option>
+              <option value="hard">Hard</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary w-100">Let's begin, shall we?</button>
+          <br /><br />
+      </div>
+      </form>
+    </div>
+    </div>
+    </div>
+  </section>
 
+    <div id="quiz">
+      <div id="quiz-header">
+        <h1>Trivia Fragesport</h1>
+        <p class="faded">Holla User</p>
+      </div>
+      <div id="quiz-start-screen">
+        <p><a href="#" id="quiz-start-btn" class="quiz-button">Start</a></p>
+      </div>
+    </div>
   <section id="home-page" class="container">
     <button class="btn btn-danger" id="logout-button">Logout</button>
     <div id="success-message"></div>
