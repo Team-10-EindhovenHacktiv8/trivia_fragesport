@@ -35,8 +35,8 @@ class userController {
         } else if (!comparePassword(user.password, data.password)) {
           throw { name: "WrongEmailPassword" }
         } else if (data && comparePassword(user.password, data.password)) {
-          const access_token = generateToken({ id: data.id, email: data.email })
-          res.status(200).json({ access_token })
+          const access_token = generateToken({ id: data.id, email: data.email, first_name:data.first_name })
+          res.status(200).json({ access_token, first_name: data.first_name })
         }
       })
       .catch((err) => {

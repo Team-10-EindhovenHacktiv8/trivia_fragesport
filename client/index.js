@@ -1,21 +1,4 @@
-const SERVER = "http://localhost:4000"
-
-helloSalut()
-
-function helloSalut() {
-  $.ajax({
-    method: "GET",
-    url: SERVER + "/salut",
-  }).done(response => {
-    $("#hello-salut").empty();
-    $("#hello-salut").append(`
-      <h1>${response.hello}</h1>
-      <p class="text-muted">Hello</p>
-    `);
-  }).fail(err => {
-    console.log(err)
-  })
-}
+const SERVER = "http://localhost:4000";
 
 $(document).ready(()=> {
   const token = localStorage.token;
@@ -23,6 +6,7 @@ $(document).ready(()=> {
   $(".register-success").empty();
   $(".error-message").empty();
   if(token) {
+    helloSalut()
     $("#landing-page").hide();
     $("#home-page").show();
   } else {
@@ -49,7 +33,7 @@ $("#logout-button").on("click", () => {
   $("#landing-page").show();
   $("#home-page").hide();
   $(".error-message").empty();
-  localStorage.removeItem("token")
+  localStorage.clear()
 })
 
 function login(e){
@@ -66,8 +50,11 @@ function login(e){
     })
     .done(response => {  
         const token = response.access_token;
+        const first_name = response.first_name;
         localStorage.setItem("token", token);
+        localStorage.setItem("first_name", first_name);
         ready();
+        helloSalut();
     })
     .fail(err => {
       $(".error-message").empty();
@@ -131,5 +118,25 @@ function register(event) {
         $("#landing-page").show();
         $("#home-page").hide();
       }
+    })
+  }
+
+
+  function helloSalut() {
+    $.ajax({
+      method: "GET",
+      url: SERVER + "/salut",
+    }).done(response => {
+      const user = localStorage.getItem("first_name")
+      $("#hello-salut").empty();
+      $("#hello-salut").append(`
+        <h1>${response.hello} ${user}</h1>
+        <p class="text-muted">Hello ${user}</p>
+      `);
+      setTimeout(() => {
+        $("#hello-salut").empty();
+      }, 5000)
+    }).fail(err => {
+      console.log(err)
     })
   }
