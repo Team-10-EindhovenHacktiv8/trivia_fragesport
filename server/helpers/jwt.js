@@ -5,9 +5,13 @@ function generateToken(obj) {
   return token
 }
 
-function verifyToken(obj) {
-  const verified = jwt.verify(token, process.env.SECRET)
-  return verified
+function verifyToken(token){
+    const decoded = jwt.verify(token, process.env.SECRET)
+    return decoded
 }
 
-module.exports = {generateToken, verifyToken}
+module.exports = {
+    generateToken,
+    verifyToken
+}
+
