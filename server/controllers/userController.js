@@ -3,7 +3,7 @@ const { comparePassword } = require('../helpers/bcrypt')
 const { generateToken } = require('../helpers/jwt')
 
 class userController {
-    static register(req, res) {
+    static register(req,res,next) {
         const userBody = {
             first_name: req.body.first_name,
             last_name: req.body.last_name,
@@ -14,16 +14,17 @@ class userController {
             .then(({ id, email, first_name, last_name }) => {
                 res.status(201).json({ id, email, first_name, last_name })
             })
-            .catch((err) => {
-                if (err.name === "SequelizeValidationError" || "SequelizeUniqueConstraintError") {
-                    res.status(400).json(err.errors)
-                } else {
-                    res.status(500).json({ message: err })
-                }
+            .catch(err => {
+                // if (err.name === "SequelizeValidationError" || "SequelizeUniqueConstraintError") {
+                //     res.status(400).json(err.errors)
+                // } else {
+                //     res.status(500).json({ message: err })
+                // }
+                next(err)
             })
     }
 
-    static login(req, res) {
+    static login(req,res,next) {
         const user = {
             email: req.body.email,
             password: req.body.password
@@ -34,11 +35,11 @@ class userController {
             }
         })
             .then(data => {
-                if (!user) {
+                if (!data) {
                     res.status(401).json({
                         message: 'wrong email/password'
                     })
-                } else if (!comparePassword(playload.password, user.password)) {
+                } else if (!comparePassword(user.password, data.password)) {
                     res.status(401).json({
                         message: 'wrong email/password'
                     })
