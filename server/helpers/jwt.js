@@ -5,4 +5,14 @@ function generateToken(obj) {
     return token
 }
 
-module.exports = generateToken
+function verifyToken(token){
+    const decoded = jwt.verify(token, process.env.SECRET)
+    return decoded
+}
+
+
+
+module.exports = {
+    generateToken,
+    verifyToken
+}
