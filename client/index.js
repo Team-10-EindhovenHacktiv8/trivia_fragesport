@@ -1,4 +1,4 @@
-const SERVER = "http://localhost:3002"
+const SERVER = "http://localhost:4000"
 
 $(document).ready(()=> {
   const token = localStorage.token;
@@ -54,6 +54,7 @@ function login(e){
     })
     .fail(err => {
       $(".error-message").empty();
+      console.log(err)
       $(".error-message").append(`
         <p class="alert alert-danger" role="alert" style="color: red;">${err.responseJSON.message}</p>
       `);

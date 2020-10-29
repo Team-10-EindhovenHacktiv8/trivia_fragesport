@@ -15,32 +15,59 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   User.init({
-    first_name: DataTypes.STRING,
-    last_name: DataTypes.STRING,
-    email: {
+    first_name: {
       type: DataTypes.STRING,
       validate: {
-        isUnique(email, next) {
-          User.findOne({
-            where: {
-              email: email
-            }
-          })
-            .then(data => {
-              // console.log({ data })
-              if (data) {
-                next('Email address already in use!'); 
-              } else {
-                next()
-              }
-            })
-            .catch(err => {
-              next(err)
-            })
+        notEmpty: {
+          msg: "First name required"
         }
       }
     },
-    password: DataTypes.STRING
+    last_name: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          msg: "Last name required"
+        }
+      }
+    },
+    email: {
+      type: DataTypes.STRING,
+      unique: {
+        msg: "Email has already registered"
+      },
+      validate: {
+        notEmpty: {
+          msg: "Email required"
+        }
+        // isUnique(email, next) {
+        //   User.findOne({
+        //     where: {
+        //       email: email
+        //     }
+        //   })
+        //     .then(data => {
+        //       // console.log({ data })
+        //       if (data) {
+        //         next('Email address already in use!'); 
+        //       } else {
+        //         next()
+        //       }
+        //     })
+        //     .catch(err => {
+        //       next(err)
+        //     })
+        // }
+      }
+    },
+    password: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          msg: "Password required"
+        }
+      }
+    }
   }, {
     hooks: {
       beforeCreate(user){
