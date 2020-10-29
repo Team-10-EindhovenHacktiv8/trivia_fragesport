@@ -1,11 +1,9 @@
-const router = require('express').Router()
-const userController = require('../controllers/userController')
+const router = require('express').Router();
+const userController = require('../controllers/userController');
+const salutController = require('../controller/salutController');
 const authentication = require("../middlewares/authentication.js")
 
-// router.get('/', (req, res) => {
-//     res.send("Hello world")
-// })
-
+router.get('/salut', salutController.getRandomSalut);
 router.post('/register', userController.register)
 router.post('/login', userController.login)
 router.post('/googleLogin', userController.googleLogin)
