@@ -1,11 +1,6 @@
 const router = require('express').Router()
-const userController = require('../controllers/userController')
+const screenshotController = require('../controllers/screenshotController')
 
-router.get('/', (req, res) => {
-    res.send("Hello world")
-})
-
-router.post('/register', userController.register)
-router.post('/login', userController.login)
+router.post('/screenshot', screenshotController.take)
 
 module.exports = router
