@@ -1,5 +1,3 @@
-
-
 const SERVER = "http://localhost:4000";
 
 $(document).ready(()=> {
@@ -459,11 +457,26 @@ function fetchCategory(){
         $('#tenorgif').show();
         $(resultsScreen).show();
         
-        if(score>=7){
-          getExcited()
-        }else{
-          getLose()
-        }
+        if (numQuestions === 10){
+          if(score>=7){
+            getExcited()
+          }else{
+            getLose()
+          }
+        } else if (numQuestions === 20){
+          if(score>=14){
+            getExcited()
+          }else{
+            getLose()
+          }
+        } else if (numQuestions === 30){
+          if(score>=21){
+            getExcited()
+          }else{
+            getLose()
+          }
+        }  
+
         var resultsStr = base.options.resultsFormat.replace('%score', score).replace('%total', numQuestions);
         $('#quiz-results').html(resultsStr);
 
