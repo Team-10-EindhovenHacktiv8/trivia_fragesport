@@ -13,7 +13,7 @@ router.use(authentication)
 
 router.post('/trivia', ControllerTrivia.showQuestion)
 router.get('/categories', ControllerTrivia.getCategory)
-router.get('/excited',TenorController.getExcited)
+router.get('/excited', TenorController.getExcited)
 router.get('/lose', TenorController.getLose)
 
 module.exports = router;
