@@ -3,15 +3,19 @@ const SERVER = "http://localhost:4000";
 $(document).ready(()=> {
   const token = localStorage.token;
   $("#register-page").hide();
+  $("quiz").hide()
   $(".register-success").empty();
   $(".error-message").empty();
   if(token) {
     helloSalut()
     $("#landing-page").hide();
     $("#home-page").show();
+    $("quiz").hide()
+    fetchCategory();
   } else {
     $("#landing-page").show();
     $("#home-page").hide();
+    $("quiz").hide()
   }
 })
 
@@ -56,6 +60,7 @@ function login(e){
         localStorage.setItem("first_name", first_name);
         ready();
         helloSalut();
+        fetchCategory();
     })
     .fail(err => {
       $(".error-message").empty();
@@ -109,7 +114,7 @@ function register(event) {
   function onSignIn(googleUser) {
     console.log('MASUK', googleUser)
     var google_access_token = googleUser.getAuthResponse().id_token;
-    // localStorage.setItem('access_token', )
+    // localStorage.setItem('access_token', token)
     $.ajax({
         method:'POST',
         url:'http://localhost:4000/googleLogin',
@@ -172,6 +177,7 @@ function register(event) {
 
 function initquestion(e){
   e.preventDefault()
+  const access_token = localStorage.getItem("token")
   const idCategory = $('#idcategory').val()
   const amountQuestion = $('#amountquestion').val()
   const difficulty = $('#difficulty').val()
@@ -185,7 +191,10 @@ function initquestion(e){
     data: {
       idCategory,
       amountQuestion,
-      difficulty
+      difficulty,
+    },
+    headers:{
+      access_token
     }
   })
   .done(data => {
@@ -216,6 +225,8 @@ function initquestion(e){
       counterFormat: 'Question %current of %total',
       questions: question
     });
+    $("#home-page").hide();
+    $("#quiz").show()
   })
   .fail(err => {
     console.log(err)
@@ -224,11 +235,16 @@ function initquestion(e){
 }
 
 function fetchCategory(){
+  const access_token = localStorage.getItem("token")
   $.ajax({
     method:"GET",
-    url: SERVER + "/categories"
+    url: SERVER + "/categories",
+    headers:{
+      access_token
+    }
   })
   .then(data => {
+    console.log(data)
     data.forEach(el => {
       $("#idcategory").append(`
       <option value="${el.id}">${el.name}</option>
@@ -439,6 +455,7 @@ function fetchCategory(){
         $('#quiz-finish-btn').hide();
         $('#quiz-next-btn').hide();
         $('#quiz-restart-btn').show();
+        $('#restartnew').show();
         $(resultsScreen).show();
         var resultsStr = base.options.resultsFormat.replace('%score', score).replace('%total', numQuestions);
         $('#quiz-results').html(resultsStr);
@@ -509,3 +526,10 @@ function fetchCategory(){
     });
   };
 }(jQuery, window, document));
+
+function newgame(){
+  $('#quiz').hide()
+  $('#quiz-response').hide();
+  $('#quiz-next-btn').hide();
+  $('#home-page').show();
+}

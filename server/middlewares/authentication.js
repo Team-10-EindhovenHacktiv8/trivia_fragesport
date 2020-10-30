@@ -3,11 +3,12 @@ const { verifyToken } = require("../helpers/jwt.js");
 
 
 function authentication(req, res, next) {
-  const { token } = req.headers;
-  if (!token) {
+  const { access_token } = req.headers;
+  
+  if (!access_token) {
     next({ name: "UserUnauthorized" })
   } else {
-    const decoded = verifyToken(token);
+    const decoded = verifyToken(access_token);
     User.findOne({
       where: {
         email: decoded.email
