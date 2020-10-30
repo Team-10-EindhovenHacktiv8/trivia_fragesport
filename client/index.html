@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> Trivia frågesport</title>
+  <link 
+    rel="stylesheet" 
+    href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" 
+    integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" 
+    crossorigin="anonymous">
+  <meta name="google-signin-client_id"
+        content="73778169427-l80ckpaf02m9lofa9uat9k7sdd0dum43.apps.googleusercontent.com">
+  <style>
+        input {cursor: pointer;}
+  </style>
+  <link rel='stylesheet' type='text/css' media='screen' href='style.css'>
+</head>
+<body>
+  <!-- Hello Salut -->
+  <section class="container">
+    <div class="row justify-content-center mt-5">
+      <div id="hello-salut">
+
+      </div>
+    </div>
+  </section>
+  <!-- End Hello Salut -->
+  <!-- Landing Page -->
+  <section id="landing-page" class="container">
+    <div class="row justify-content-center mt-5">
+      <div class="col-5 shadow p-5 bg-dark">
+        <form onsubmit="login(event)">
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="login-email" class="form-control">
+            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="login-password" class="form-control">
+          </div>
+          <button type="submit" class="btn btn-primary">Login</button>
+          <a href="#" id="register-link">Register now</a><br><br>
+          <div class="g-signin2" data-onsuccess="onSignIn"></div>
+          <br><div class="error-message"></div>
+          <br><div class="register-success"></div>
+        </form>
+      </div>
+    </div>
+  </section>
+  <!-- End Landing Page -->
+  <!-- Register Page -->
+  <section id="register-page" class="container">
+    <div class="row justify-content-center mt-5">
+      <div class="col-5 shadow p-5 bg-dark">
+        <form onsubmit="register(event)">
+          <div class="form-group">
+            <label for="first-name">First name</label>
+            <input type="text" id="reg-first-name" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="last-name">Last Name</label>
+            <input type="text" id="reg-last-name" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="reg-email" class="form-control">
+            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="reg-password" class="form-control">
+          </div>
+          <button type="submit" class="btn btn-primary">Register</button>
+          <a href="#" class="cancel-button">Cancel</a><br><br>
+          <div class="error-message"></div>
+          <div class="register-success"></div>
+        </form>
+      </div>
+    </div>
+  </section>
+  <!-- End Register Page -->
+  <!-- Home Page -->
+  <section class="container" id="home-page" class="justify-content-center">
+    <div class="row justify-content-center align-items-center mt-5" style="height: 94vh;">
+      <div class="col-12" style="text-align: center;">
+      <h1>Trivia Fragesport</h1>
+      <h3>If you get a high score, you probably spend way too much time on Wikipedia.</h3>
+      <p class="faded">(You'll have to provide your own snacks, sorry.)</p>
+      <button class="btn btn-danger" id="logout-button">Logout</button>
+      <div id="success-message"></div>
+    </div>
+      <div class="col-6">
+        <img class='w-100' src="./assets/test.svg" />
+      </div>
+      <div class="col-5 p-5 shadow rounded justify-content-center bg-dark">
+        <h1>Ready to take a quiz?</h1>
+        <hr />
+        <form onsubmit="initquestion(event)">
+          <div class="form-group">
+            <label for="category">Category</label>
+            <select id="idcategory" class="form-control form-control-lg"></select>
+          </div>
+          <div class="form-group">
+            <label for="amount">Amount of question</label>
+            <select id="amountquestion" class="form-control form-control-lg">
+              <option value="10">10</option>
+              <option value="20">20</option>
+              <option value="30">30</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="difficulty">difficulty</label>
+            <select id="difficulty" class="form-control form-control-lg">
+              <option value="easy">Easy</option>
+              <option value="medium">Medium</option>
+              <option value="hard">Hard</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary w-100">Let's begin, shall we?</button>
+          <br /><br />
+      </div>
+      </form>
+    </div>
+    </div>
+    </div>
+  </section>
+
+    <section id="quiz" style="display: none;">
+      <div id="quiz-header">
+        <h1>Trivia Fragesport</h1>
+      </div>
+      <div id="quiz-start-screen">
+        <p><a href="#" id="quiz-start-btn" class="quiz-button">Start</a></p>
+      </div>
+      <div class="row justify-content-center" id="tenorgif" style="display: none;"></div>
+      <div id="restartnew" style="display: none;">
+        <!-- <button class="btn btn-primary" onclick="newgame()">new game</button> -->
+      </div>
+    </div>
+  <!-- End Home Page -->
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+  <!-- Always remember to call the above files first before calling the bootstrap.min.js file -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script> 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="index.js"></script>
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+</body>
+</html>
