@@ -18,6 +18,7 @@ class ControllerTrivia {
   static getCategory(req, res, next){
     axios.get('https://opentdb.com/api_category.php')
     .then(data => {
+      console.log("sampe sini")
       res.status(200).json(data.data.trivia_categories)
     })
     .catch(err => {

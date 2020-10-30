@@ -1,5 +1,3 @@
-
-
 const SERVER = "http://localhost:4000";
 
 $(document).ready(()=> {
@@ -39,6 +37,7 @@ $("#logout-button").on("click", () => {
   $("#landing-page").show();
   $("#home-page").hide();
   $(".error-message").empty();
+  $("#hello-salut").empty();
   signOut()
   localStorage.clear()
 })
@@ -115,7 +114,6 @@ function register(event) {
 
   function onSignIn(googleUser) {
     var google_access_token = googleUser.getAuthResponse().id_token;
-    // localStorage.setItem('access_token', token)
     $.ajax({
         method:'POST',
         url:'http://localhost:4000/googleLogin',
@@ -124,6 +122,7 @@ function register(event) {
         }
     }) 
     .done(response => {
+      console.log(response.access_token)
       localStorage.setItem("token", response.access_token)
       localStorage.setItem("first_name", response.first_name)
       helloSalut()
@@ -155,9 +154,7 @@ function register(event) {
         $("#home-page").hide();
       }
     })
-
   }
-
 
   function helloSalut() {
     $.ajax({
@@ -459,11 +456,26 @@ function fetchCategory(){
         $('#tenorgif').show();
         $(resultsScreen).show();
         
-        if(score>=7){
-          getExcited()
-        }else{
-          getLose()
-        }
+        if (numQuestions === 10){
+          if(score>=7){
+            getExcited()
+          }else{
+            getLose()
+          }
+        } else if (numQuestions === 20){
+          if(score>=14){
+            getExcited()
+          }else{
+            getLose()
+          }
+        } else if (numQuestions === 30){
+          if(score>=21){
+            getExcited()
+          }else{
+            getLose()
+          }
+        }  
+
         var resultsStr = base.options.resultsFormat.replace('%score', score).replace('%total', numQuestions);
         $('#quiz-results').html(resultsStr);
 
@@ -476,6 +488,7 @@ function fetchCategory(){
         base.$el.addClass('quiz-questions-state');
         $('#questions').show();
         $('#quiz-counter').show();
+        $('#tenorgif').empty();
         $('.question-container:first-child').show().addClass('active-question');
         base.methods.updateCounter();
       },

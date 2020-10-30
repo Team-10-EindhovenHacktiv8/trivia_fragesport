@@ -76,6 +76,7 @@ class userController {
           }
           return User.create(userObj)
         }
+        
       })
       .then(dataUser => {
         let access_token = generateToken({ id: dataUser.id, email: dataUser.email })
