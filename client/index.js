@@ -1,3 +1,5 @@
+
+
 const SERVER = "http://localhost:4000";
 
 $(document).ready(()=> {
@@ -112,7 +114,6 @@ function register(event) {
   }
 
   function onSignIn(googleUser) {
-    console.log('MASUK', googleUser)
     var google_access_token = googleUser.getAuthResponse().id_token;
     // localStorage.setItem('access_token', token)
     $.ajax({
@@ -123,7 +124,9 @@ function register(event) {
         }
     }) 
     .done(response => {
-      localStorage.setItem("token", response)
+      localStorage.setItem("token", response.access_token)
+      localStorage.setItem("first_name", response.first_name)
+      helloSalut()
       ready()
     })
     .fail(err => {
@@ -181,10 +184,6 @@ function initquestion(e){
   const idCategory = $('#idcategory').val()
   const amountQuestion = $('#amountquestion').val()
   const difficulty = $('#difficulty').val()
-  console.log(idCategory)
-  console.log(amountQuestion)
-  console.log(difficulty)
-
   $.ajax({
     method: "POST", 
     url: SERVER + "/trivia",
@@ -244,7 +243,6 @@ function fetchCategory(){
     }
   })
   .then(data => {
-    console.log(data)
     data.forEach(el => {
       $("#idcategory").append(`
       <option value="${el.id}">${el.name}</option>
@@ -439,6 +437,7 @@ function fetchCategory(){
           quizHtml += '<p id="quiz-gameover-response"></p>';
           quizHtml += '<p><a href="#" id="quiz-retry-btn">' + restartButtonText + '</a></p>';
           quizHtml += '</div>';
+
           base.$el.append(quizHtml);
         }
         $('#quiz-gameover-response').html(response);
@@ -446,6 +445,7 @@ function fetchCategory(){
         $('#questions').hide();
         $('#quiz-finish-btn').hide();
         $(gameOverScreen).show();
+        
       },
       finish: function() {
         base.$el.removeClass('quiz-questions-state').addClass('quiz-results-state');
@@ -455,8 +455,15 @@ function fetchCategory(){
         $('#quiz-finish-btn').hide();
         $('#quiz-next-btn').hide();
         $('#quiz-restart-btn').show();
-        $('#restartnew').show();
+        // $('#restartnew').show();
+        $('#tenorgif').show();
         $(resultsScreen).show();
+        
+        if(score>=7){
+          getExcited()
+        }else{
+          getLose()
+        }
         var resultsStr = base.options.resultsFormat.replace('%score', score).replace('%total', numQuestions);
         $('#quiz-results').html(resultsStr);
 
@@ -527,9 +534,45 @@ function fetchCategory(){
   };
 }(jQuery, window, document));
 
-function newgame(){
-  $('#quiz').hide()
-  $('#quiz-response').hide();
-  $('#quiz-next-btn').hide();
-  $('#home-page').show();
+// function newgame(){
+//   $('#quiz').hide()
+//   $('#quiz-response').hide();
+//   $('#quiz-next-btn').hide();
+//   $('#home-page').show();
+// }
+
+function getExcited(){
+  const access_token = localStorage.getItem("token")
+  $.ajax({
+    method:"GET",
+    url: SERVER + "/excited",
+    headers:{
+      access_token
+    }
+  })
+  .done(data => {
+    $('#tenorgif').empty()
+    $('#tenorgif').append(`<img src=${data}>`)   
+  })
+  .fail(err => {
+    console.log(err)
+  })
+}
+
+function getLose(){
+  const access_token = localStorage.getItem("token")
+  $.ajax({
+    method:"GET",
+    url: SERVER + "/lose",
+    headers:{
+      access_token
+    }
+  })
+  .done(data => {
+    $('#tenorgif').empty()
+    $('#tenorgif').append(`<img src=${data}>`)   
+  })
+  .fail(err => {
+    console.log(err)
+  })
 }

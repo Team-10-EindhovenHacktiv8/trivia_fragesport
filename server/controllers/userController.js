@@ -47,7 +47,6 @@ class userController {
 
   static googleLogin(req, res, next) {
     let { google_access_token } = req.body
-    console.log('msuk', google_access_token)
     const client = new OAuth2Client('73778169427-l80ckpaf02m9lofa9uat9k7sdd0dum43.apps.googleusercontent.com')
     let email = '';
     let first_name;
@@ -62,7 +61,6 @@ class userController {
         first_name = payload.given_name;
         last_name = payload.family_name;
         email = payload.email;
-        console.log(payload)
         return User.findOne({ where: { email: payload.email } })
       })
       .then(user => {
@@ -81,8 +79,7 @@ class userController {
       })
       .then(dataUser => {
         let access_token = generateToken({ id: dataUser.id, email: dataUser.email })
-        console.log("LEWAT SINI")
-        return res.status(200).json(access_token)
+        return res.status(200).json({access_token, first_name:dataUser.first_name})
       })
       .catch(err => {
         next(err)
